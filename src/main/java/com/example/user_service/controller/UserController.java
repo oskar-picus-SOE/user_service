@@ -18,8 +18,8 @@ public class UserController {
     private static final Logger LOGGER = LoggerFactory.getLogger(UserController.class);
     private final UserService userService;
 
-    @Value("${server.instance.id}")
-    private String instanceId;
+    @Value("${server.port}")
+    private String port;
 
     @Autowired
     public UserController(UserService userService) {
@@ -28,7 +28,7 @@ public class UserController {
 
     @GetMapping("/users")
     public ResponseEntity<User> findUser(@RequestParam("username") String username) {
-        LOGGER.info("Finding user with username {} on instance ID {}", username, instanceId);
+        LOGGER.info("Finding user with username {} on instance running on port {}", username, port);
         return userService.findUser(username)
                 .map(ResponseEntity::ok)
                 .orElse(ResponseEntity.notFound().build());
